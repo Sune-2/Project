@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://thymeleaf.org/extras/spring-security">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+	integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"	crossorigin="anonymous">
+<!-- FullCalendar -->
+<link th:href="@{/css/main.css}" rel="stylesheet" />
+<script th:src="@{/script/main.js}"></script>
+<script th:inline="javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+		var calendarEl = document.getElementById('calendar');
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+			initialView : 'dayGridMonth',
+			dateClick: function(info) { 
+				var date = info.dateStr;
+				var today = new Date();
+				
+				if (info.date < today) {
+					alert("지난 날짜 및 당일은 예약하실 수 없습니다.");
+					return;
+				}				
+				
+				if([[${#authorization.expression('isAnonymous()')}]]) {
+					alert("로그인이 필요합니다.");
+					window.location.href="/login";
+				} else{
+					window.location.href="/reservate/"+date;
+				}
+			},
+			eventClick: function(info) {
+				var eventDate = info.event.start;
+ 				var date = getFormatDate(eventDate)
+				if(info.event.title == "예약 완료") {
+					alert("다른 사용자의 예약 정보를 확인할 수 없습니다.")
+				} else {
+					window.location.href="/reservate/check/"+ date;
+				}
+			},
+			events:	[[${event}]]
+		});
+		calendar.render();
+	});
+	
+	function getFormatDate(date){
+	    var year = date.getFullYear();              	//yyyy
+	    var month = (1 + date.getMonth());          	//M
+	    month = month >= 10 ? month : '0' + month;  	//month 두자리로 저장
+	    var day = date.getDate();                   	//d
+	    day = day >= 10 ? day : '0' + day;          	//day 두자리로 저장
+	    return  year + '-' + month + '-' + day;       	//'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+	}
+</script>
+<!-- custom CSS -->
+<link rel="icon" th:href="@{/image/favicon.ico}">
+<title>Project</title>
+</head>
+<body>
+	<!-- Navigation -->
+	<nav th:replace="~{navbar :: navbarFragment}"></nav>
+	<!-- 기본 템플릿 안에 삽입될 내용 Start -->
+	<th:block layout:fragment="content"></th:block>
+	<!-- 기본 템플릿 안에 삽입될 내용 End -->
+	<!-- Bootstrap JS -->
+	<script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"	crossorigin="anonymous"></script>
+</body>
+</html>

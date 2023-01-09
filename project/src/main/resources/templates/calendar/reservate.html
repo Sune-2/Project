@@ -1,0 +1,94 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+	<!-- Container  -->
+	<div class="container-sm" style="max-width: 600px">
+		<div class="text-center my-5">
+			<h1>예약하기</h1>
+		</div>
+		<!-- Form -->
+		<form id="form" th:action="@{/reservate}" th:object="${pet}" method="post">
+			<div th:replace="~{form_errors :: formErrorsFragment}"></div>
+			<div class="row my-2">
+				<div class="col-2 text-center align-self-center">
+					<label class="form-label fw-bold" for="reservateDate">예약 날짜</label>
+				</div>
+				<div class="col-10">
+					<input class="form-control" type="date" id="reservateDate" name="reservateDate" th:value="${date}" required>
+				</div>
+			</div>
+			<div class="row my-2">
+				<div class="col-2 text-center align-self-center">
+					<label class="form-label fw-bold" for="userId">사용자</label>
+				</div>
+				<div class="col-10">
+					<input class="form-control" type="text" id="userId" name="userId" th:value="${member.userId}" required>
+				</div>
+			</div>
+			<div class="row my-2">
+				<div class="col-2 text-center align-self-center">
+					<label class="form-label fw-bold" for="petName">반려동물 이름</label>
+				</div>
+				<div class="col-10">
+					<input class="form-control" type="text" id="petName" name="petName" placeholder="반려동물 이름을 입력하세요" required>
+				</div>
+			</div>
+			<div class="row my-2">
+				<div class="col-2 text-center align-self-center">
+					<label class="form-label fw-bold" for="petAge">반려동물 나이</label>
+				</div>
+				<div class="col-10">
+					<input class="form-control" type="number" id="petAge" name="petAge" placeholder="반려동물 나이를 입력하세요" required>
+				</div>
+			</div>
+			<div class="row my-2">
+				<div class="col-2 text-center align-self-center">
+					<label class="form-label fw-bold">성별</label>
+				</div>
+				<div class="col-5">
+					<div th:each="type: ${gender}" class="form-check form-check-inline">
+						<input type="radio" th:field="*{gender}" th:value="${type.name()}"
+								class="form-check-input">
+						<label th:for="${#ids.seq('gender')}" th:text="${type.description}"
+								class="form-check-label"></label>
+					</div>
+				</div>
+			</div>
+			<div class="row my-2">
+				<div class="col-2 text-center align-self-center">
+					<label class="form-label fw-bold" for="phone">연락처</label>
+				</div>
+				<div class="col-10">
+					<input class="form-control" type="number" id="phone" name="phone" th:value="${member.phone}" required>
+				</div>
+			</div>
+			<div class="row my-2">
+				<div class="col-2 text-center align-self-center">
+					<label class="form-label fw-bold" for="address">주소</label>
+				</div>
+				<div class="col-10">
+					<input class="form-control" type="text" id="address" name="address" th:value="${member.address}" required>
+				</div>
+			</div>
+			<div class="row my-2">
+				<div class="col-2 text-center align-self-center">
+	            	<label for="content" class="form-label fw-bold">요청사항</label>
+	            </div>
+	            <div class="col-10">
+	            	<textarea id="content" name="content" class="form-control" rows="10"></textarea>
+	            </div>
+        	</div>
+			<hr>
+			<!-- Button  -->
+			<div class="row">
+				<div class="col">
+					<button type="button" class="btn btn-outline-dark btn-lg w-100" onclick="history.back();">취소</button>
+				</div>
+				<div class="col">
+					<button type="submit" class="btn btn-secondary btn-lg w-100">예약하기</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+</html>

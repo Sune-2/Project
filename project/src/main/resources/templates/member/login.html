@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+	<!-- Container  -->
+	<div class="container-sm" style="max-width: 600px">
+		<div class="text-center my-5">
+			<h1>로그인</h1>
+		</div>
+		<div th:if="${param.error}">
+            <div class="alert alert-danger">
+                사용자ID 또는 비밀번호를 확인해 주세요.
+            </div>
+        </div>
+		<!-- Form -->
+		<form id="form" th:action="@{/login}" method="post">
+			<div class="row">
+				<div class="col-10">
+					<div class="row my-2">
+						<div class="col-2 text-center align-self-center">
+							<label class="form-label fw-bold" for="userId">ID</label>
+						</div>
+						<div class="col-10">
+							<input class="form-control" type="text" id="userId" name="userId" placeholder="아이디를 입력하세요" required>
+						</div>
+					</div>
+					<div class="row my-2">
+						<div class="col-2 text-center align-self-center">
+							<label class="form-label fw-bold" for="password">PW</label>
+						</div>
+						<div class="col-10">
+							<input class="form-control" type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
+						</div>
+					</div>
+				</div>
+				<div class="col-2">
+					<button type="submit" class="btn btn-outline-dark btn-lg my-4">Login</button>
+				</div>
+			</div>
+		</form>
+		
+		<br>
+		<div class="row">
+			<div class="col">
+				<button type="button" class="btn btn-outline-dark btn-lg w-100" onclick="history.back();">돌아가기</button>
+			</div>
+			<div class="col">
+				<button type="submit" class="btn btn-secondary btn-lg w-100" th:onclick="|location.href='@{/join}'|">회원 가입</button>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

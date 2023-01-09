@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+	<div class="cover_cover text-center">
+		<div class="cover">
+			<div>
+			</div>
+			<div>
+			</div>
+			<div>
+			</div>
+		</div>
+		<h1 style="position: absolute; color: dodgerblue; font-weight: bold;
+   				 left: 30%; top: 30%; z-index: 99;">펫 시터가<br>집으로<br>찾아갑니다</h1>
+		<ul class="bullet" style="list-style:none; padding-left:0px;">
+			<li class="hover"></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+	<div sec:authentication="principal"></div>
+</div>
+</html>

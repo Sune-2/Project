@@ -1,0 +1,47 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+	<div class="text-center height-auto">
+		<h1>검색 결과</h1><br>
+		<form class="d-flex" th:method="get" th:action="@{search}">
+			<select id="searchType" name="searchType">
+				<option th:each="searchTypeValue : ${T(himedia.project.entity.SearchType).values()}" th:text="${searchTypeValue.getKey()}" th:value="${searchTypeValue.name()}"></option>
+			</select>
+			<div class="search-bar">
+				<input class="form-control" type="text" id="keyword" name="keyword" th:value="${keyword}">
+			</div>
+			<button type="submit" class="btn btn-primary">search</button>
+		</form>
+	</div>
+	<br>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>등록일</th>
+				<th>조회 수</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="low" th:each="board: ${board}">
+				<td class="col-2" th:text="${board.id}"></td>
+				<td class="col-4">
+					<a th:href="@{|/board/view/${board.id}|}" th:text="${board.title}"></a>
+				</td>
+				<td class="col-2" th:text="${board.writer}"></td>
+				<td class="col-2" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd')}"></td>
+				<td class="col-2" th:text="${board.hits}"></td>
+			</tr>
+		</tbody>
+	</table>
+    
+    <div class="form-group row">
+	    <div class="col-10"></div>
+	    <div class="col-2">
+			<button th:onclick="|location.href='@{/board/write}'|" sec:authorize="isAuthenticated()" class="btn btn-primary">글 쓰기</button>
+		</div>
+    </div>
+</div>
+</html>
